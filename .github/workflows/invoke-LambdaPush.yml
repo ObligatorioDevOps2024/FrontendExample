@@ -30,15 +30,13 @@ jobs:
           echo "::set-output name=encoded_payload::$ENCODED_PAYLOAD"
 
       # Invocar la Lambda con el payload codificado en base64
-      - name: NotificacionCommit-Push
+      - name: Invoke Lambda Function
         run: |
           aws lambda invoke \
-            --function-name NotificacionEventoPush \
+            --function-name NotificacionCommit-Push \
             --payload "${{ steps.encode.outputs.encoded_payload }}" \
             response.json
 
       # Se muestra la respuesta de la invocación
       - name: Output Lambda response
-        run: |
-          cat response.json
-
+        run: cat response.json
