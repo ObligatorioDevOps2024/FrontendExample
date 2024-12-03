@@ -28,13 +28,13 @@ jobs:
           ENCODED_PAYLOAD=$(echo -n "$PAYLOAD" | base64)
           echo "::set-output name=encoded_payload::$ENCODED_PAYLOAD"
 
-      - name: Invoke Lambda function
+      - name: NotificacionCommit-Push
         run: |
           aws lambda invoke \
             --function-name NotificacionEventoPush \
             --payload "${{ steps.encode.outputs.encoded_payload }}" \
             response.json
 
-      - name: Output Lambda response
+      - name: NotificacionCommit-Push
         run: |
           cat response.json
