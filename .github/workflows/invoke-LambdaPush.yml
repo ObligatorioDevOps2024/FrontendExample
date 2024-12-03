@@ -26,10 +26,10 @@ jobs:
           aws-region: 'us-east-1' 
 
       # Se invoca la función Lambda
-      - name: NotificacionEventoPush
+      - name: NotificacionCommit-Push
         run: |
           aws lambda invoke \
-            --function-name NotificacionEventoPush  # Nombre de tu función Lambda tal como se definió en AWS
+            --function-name NotificacionCommit-Push  # Nombre de tu función Lambda tal como se definió en AWS
             --payload '{"message": "Nuevo commit en la rama main"}'  
             response.json
 
