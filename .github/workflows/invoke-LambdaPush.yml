@@ -21,15 +21,24 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: 'us-east-1'
 
-      # Aquí ya no es necesario codificar en base64, directamente pasamos el payload
+      # Codificar el payload en base64
+      - name: Base64 encode payload
+        id: encode
+        run: |
+          PAYLOAD='{"message": "Nuevo commit en la rama main"}'
+          ENCODED_PAYLOAD=$(echo -n "$PAYLOAD" | base64)
+          echo "::set-output name=encoded_payload::$ENCODED_PAYLOAD"
+
+      # Invocar la Lambda con el payload codificado en base64
       - name: NotificacionCommit-Push
         run: |
           aws lambda invoke \
-            --function-name NotificacionCommit-Push \
-            --payload '{"message": "Nuevo commit en la rama main"}' \
+            --function-name NotificacionEventoPush \
+            --payload "${{ steps.encode.outputs.encoded_payload }}" \
             response.json
 
       # Se muestra la respuesta de la invocación
       - name: Output Lambda response
         run: |
           cat response.json
+
