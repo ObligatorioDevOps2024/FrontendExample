@@ -26,7 +26,7 @@ jobs:
           aws-region: 'us-east-1' 
 
       # Se invoca la función Lambda
-      - name: Invoke Lambda function
+      - name: NotificacionEventoPush
         run: |
           aws lambda invoke \
             --function-name NotificacionEventoPush  # Nombre de tu función Lambda tal como se definió en AWS
