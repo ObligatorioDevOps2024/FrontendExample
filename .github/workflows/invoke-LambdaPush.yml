@@ -29,9 +29,9 @@ jobs:
       - name: NotificacionCommit-Push
         run: |
           aws lambda invoke \
-            --function-name NotificacionCommit-Push  # Nombre de tu función Lambda tal como se definió en AWS
-            --payload '{"message": "Nuevo commit en la rama main"}'  
-            response.json
+            --function-name NotificacionCommit-Push  \  # Nombre de tu función Lambda tal como se definió en AWS
+            --payload '{"message": "Nuevo commit en la rama main"}'   \ 
+            response.json  # El archivo de salida donde se guarda la respuesta
 
       # Se muestra la respuesta de la invocación
       - name: Output Lambda response
