@@ -1,7 +1,5 @@
 name: Invoke Lambda Function
 
-# Cuando haya un commit en la rama 'main' se ejecutará automáticamente este flujo,
-# invocando a la función lambda de AWS para notificar el evento
 on:
   push:
     branches:
@@ -12,11 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Credenciales de AWS y secrets
       - name: Set up AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -25,16 +21,20 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: 'us-east-1'
 
-      # Se invoca la función Lambda
-      - name: NotificacionCommit-Push 
+      - name: Base64 encode payload
+        id: encode
+        run: |
+          PAYLOAD='{"message": "Nuevo commit en la rama main"}'
+          ENCODED_PAYLOAD=$(echo -n "$PAYLOAD" | base64)
+          echo "::set-output name=encoded_payload::$ENCODED_PAYLOAD"
+
+      - name: Invoke Lambda function
         run: |
           aws lambda invoke \
             --function-name NotificacionEventoPush \
-            --payload '{"message": "Nuevo commit en la rama main"}' \
+            --payload "${{ steps.encode.outputs.encoded_payload }}" \
             response.json
 
-      # Se muestra la respuesta de la invocación
       - name: Output Lambda response
         run: |
           cat response.json
-
