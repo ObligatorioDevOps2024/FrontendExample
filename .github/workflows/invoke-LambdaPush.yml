@@ -1,7 +1,7 @@
 name: Invoke Lambda Function
 
 # Cuando haya un commit en la rama 'main' se ejecutará automáticamente este flujo,
-# invokando a la función lambda de AWS para notificar el evento
+# invocando a la función lambda de AWS para notificar el evento
 on:
   push:
     branches:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -23,7 +23,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: 'us-east-1' 
+          aws-region: 'us-east-1'
 
       # Se invoca la función Lambda
       - name: NotificacionCommit-Push 
@@ -35,4 +35,6 @@ jobs:
 
       # Se muestra la respuesta de la invocación
       - name: Output Lambda response
-        run: cat response.json
+        run: |
+          cat response.json
+
