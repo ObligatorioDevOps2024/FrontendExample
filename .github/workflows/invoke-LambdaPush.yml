@@ -23,7 +23,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-secret-access-token: ${{ secrets.AWS_SECRET_ACCESS_TOKEN }}
-          region: 'us-east-1' 
+          aws-region: 'us-east-1' 
 
       # Se invoca la función Lambda
       - name: Invoke Lambda function
