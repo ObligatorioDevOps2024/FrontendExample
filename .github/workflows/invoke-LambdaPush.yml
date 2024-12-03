@@ -25,7 +25,7 @@ jobs:
       - name: NotificacionCommit-Push
         run: |
           aws lambda invoke \
-            --function-name NotificacionEventoPush \
+            --function-name NotificacionCommit-Push \
             --payload '{"message": "Nuevo commit en la rama main"}' \
             response.json
 
