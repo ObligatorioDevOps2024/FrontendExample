@@ -33,7 +33,7 @@ jobs:
       - name: Invoke Lambda Function
         run: |
           aws lambda invoke \
-            --function-name NotificacionCommit-Push \
+            --function-name NotificacionCommit \
             --payload "${{ steps.encode.outputs.encoded_payload }}" \
             response.json
 
